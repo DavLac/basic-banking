@@ -6,7 +6,7 @@ Just run the app with your favorite IDE. You can reach the app at `localhost:808
 
 ## API details
 
-- Make a deposit or withdrawal :
+- Get or create an Account by account number and deposit or withdrawal money on it :
 ```
 POST /operations
 Body:
@@ -26,7 +26,7 @@ Output:
 }
 ```
 
-- Get operation history :
+- Get account operation history :
 ```
 GET /operations/123
 

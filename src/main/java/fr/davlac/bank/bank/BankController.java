@@ -21,6 +21,10 @@ public class BankController {
 
     private final BankService bankService;
 
+    /**
+     * Get or create an Account by account number
+     * and deposit or withdrawal money on it
+     */
     @PostMapping
     public Operation createOperation(
             @Valid
@@ -30,6 +34,9 @@ public class BankController {
         return bankService.createOperation(createOperationRequest);
     }
 
+    /**
+     * List operation history from an account
+     */
     @GetMapping("{accountNumber}")
     public List<Operation> getAccountHistory(
             @PathVariable
