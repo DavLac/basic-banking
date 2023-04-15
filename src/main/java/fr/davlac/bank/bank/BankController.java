@@ -31,7 +31,7 @@ public class BankController {
     }
 
     @GetMapping("{accountNumber}")
-    public List<Operation> deposit(
+    public List<Operation> getAccountHistory(
             @PathVariable
             Long accountNumber
     ) {
