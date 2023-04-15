@@ -1,7 +1,6 @@
 package fr.davlac.bank.bank;
 
-import fr.davlac.bank.account.Account;
-import fr.davlac.bank.account.AccountService;
+import fr.davlac.bank.operation.OperationService;
 import fr.davlac.bank.operation.model.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,13 +16,17 @@ import java.util.Objects;
 public class BankService {
 
     private static final Map<Long, Account> accounts = new HashMap<>();
-
-    private final AccountService accountService;
+    private final OperationService operationService;
 
     public Operation createOperation(CreateOperationRequest request) {
         Account account = getOrCreateAccount(request.getAccountNumber());
-        Account operatedAccount = accountService.createOperation(account, request.getOperationType(), request.getAmount());
-        return operatedAccount.operationHistory().getLast();
+        Operation createdOperation = operationService.createOperation(
+                request.getOperationType(),
+                request.getAmount(),
+                account.getBalance()
+        );
+        account.operationHistory().addLast(createdOperation);
+        return createdOperation;
     }
 
     public List<Operation> getAccountHistory(Long accountNumber) {
