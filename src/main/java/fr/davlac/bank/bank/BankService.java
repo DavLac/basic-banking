@@ -21,8 +21,8 @@ public class BankService {
     public Operation createOperationByAccountNumber(Long accountNumber, CreateOperationRequest request) {
         Account account = getOrCreateAccount(accountNumber);
         Operation createdOperation = operationService.createOperation(
-                request.getOperationType(),
-                request.getAmount(),
+                request.operationType(),
+                request.amount(),
                 account.getBalance()
         );
         account.operationHistory().addLast(createdOperation);
