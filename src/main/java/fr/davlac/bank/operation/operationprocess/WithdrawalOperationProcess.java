@@ -1,5 +1,6 @@
 package fr.davlac.bank.operation.operationprocess;
 
+import fr.davlac.bank.operation.error.OperationNotAllowedException;
 import fr.davlac.bank.operation.model.Operation;
 import fr.davlac.bank.operation.OperationProcess;
 import fr.davlac.bank.operation.model.OperationType;
@@ -19,8 +20,11 @@ public class WithdrawalOperationProcess implements OperationProcess {
     @Override
     public Operation execute(double amount, double currentBalance) {
         if (currentBalance - amount < 0) {
-            throw new RuntimeException(
-                    "Operation %s not allowed. Current balance = %s".formatted(OperationType.WITHDRAWAL, currentBalance)
+            throw new OperationNotAllowedException(
+                    "Operation %s not allowed. Not enough balance. Current balance = %s".formatted(
+                            OperationType.WITHDRAWAL,
+                            currentBalance
+                    )
             );
         }
 

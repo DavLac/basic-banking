@@ -18,8 +18,8 @@ public class BankService {
     private static final Map<Long, Account> accounts = new HashMap<>();
     private final OperationService operationService;
 
-    public Operation createOperation(CreateOperationRequest request) {
-        Account account = getOrCreateAccount(request.getAccountNumber());
+    public Operation createOperationByAccountNumber(Long accountNumber, CreateOperationRequest request) {
+        Account account = getOrCreateAccount(accountNumber);
         Operation createdOperation = operationService.createOperation(
                 request.getOperationType(),
                 request.getAmount(),
@@ -29,7 +29,7 @@ public class BankService {
         return createdOperation;
     }
 
-    public List<Operation> getAccountHistory(Long accountNumber) {
+    public List<Operation> getOperationHistoryByAccountNumber(Long accountNumber) {
         Account account = getOrCreateAccount(accountNumber);
         List<Operation> operationHistory = account.operationHistory();
         Collections.reverse(operationHistory);
@@ -46,5 +46,4 @@ public class BankService {
             return account;
         }
     }
-
 }

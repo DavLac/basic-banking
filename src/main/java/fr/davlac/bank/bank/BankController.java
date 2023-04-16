@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "operations")
+@RequestMapping(value = "accounts")
 @RequiredArgsConstructor
 @Validated
 public class BankController {
@@ -22,27 +22,29 @@ public class BankController {
     private final BankService bankService;
 
     /**
-     * Get or create an Account by account number
-     * and deposit or withdrawal money on it
+     * Deposit or withdrawal money on an account
+     * Create an account if it's not existing
      */
-    @PostMapping
-    public Operation createOperation(
+    @PostMapping("{accountNumber}/operations")
+    public Operation createOperationByAccountNumber(
+            @PathVariable
+            Long accountNumber,
             @Valid
             @RequestBody
             CreateOperationRequest createOperationRequest
     ) {
-        return bankService.createOperation(createOperationRequest);
+        return bankService.createOperationByAccountNumber(accountNumber, createOperationRequest);
     }
 
     /**
-     * List operation history from an account
+     * List account operation history
      */
-    @GetMapping("{accountNumber}")
-    public List<Operation> getAccountHistory(
+    @GetMapping("{accountNumber}/operations")
+    public List<Operation> getOperationHistoryByAccountNumber(
             @PathVariable
             Long accountNumber
     ) {
-        return bankService.getAccountHistory(accountNumber);
+        return bankService.getOperationHistoryByAccountNumber(accountNumber);
     }
 
 }

@@ -7,8 +7,6 @@ import lombok.Data;
 
 @Data
 public class CreateOperationRequest {
-    @NotNull
-    Long accountNumber;
 
     @Positive
     double amount;
